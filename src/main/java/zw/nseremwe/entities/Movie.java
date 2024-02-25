@@ -28,7 +28,7 @@ public class Movie {
     @NotBlank(message = "Please provide studio")
     private String studio;
     @Column(nullable = false)
-    @NotBlank(message = "Please provide release year")
+
     private Integer releaseYear;
     @ElementCollection
     @CollectionTable(name = "movie_cast")
