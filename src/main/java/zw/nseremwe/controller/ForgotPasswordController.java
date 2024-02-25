@@ -42,7 +42,6 @@ public class ForgotPasswordController {
     public ResponseEntity<String> verifyEmail(@PathVariable String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Please provide an valid email!" + email));
-
         int otp = otpGenerator();
         MailBody mailBody = MailBody.builder()
                 .to(email)
@@ -68,7 +67,7 @@ public class ForgotPasswordController {
                 .orElseThrow(() -> new UsernameNotFoundException("Please provide an valid email!"));
 
         ForgotPassword fp = forgotPasswordRepository.findByOtpAndUser(otp, user)
-                .orElseThrow(() -> new RuntimeException("Invalid OTP for email: " + email));
+                .orElseThrow(() -> new RuntimeException("Invalid OTP for : " + email));
 
         if (fp.getExpirationTime().before(Date.from(Instant.now()))) {
             forgotPasswordRepository.deleteById(fp.getFpid());
